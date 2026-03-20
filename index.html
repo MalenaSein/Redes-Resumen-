@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redes — Resumen de Materia</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg2: #0f1218;
+    --bg3: #141820;
+    --surface: #1a1f2e;
+    --surface2: #222840;
+    --border: #2a3050;
+    --accent: #4f8ef7;
+    --accent2: #7c5cfc;
+    --accent3: #2dd4bf;
+    --accent4: #f97316;
+    --accent5: #e879f9;
+    --accent6: #facc15;
+    --text: #e8eaf0;
+    --text2: #9ba3c0;
+    --text3: #5a6380;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── SIDEBAR NAV ─── */
+  .nav {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 230px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+    z-index: 100;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav::-webkit-scrollbar { width: 4px; }
+  .nav::-webkit-scrollbar-track { background: transparent; }
+  .nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-logo {
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .nav-logo .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .nav-logo h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .nav-section { padding: 0 1rem; margin-bottom: 0.5rem; }
+
+  .nav-section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.5rem 0.5rem 0.3rem;
+    display: block;
+  }
+
+  .nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 6px;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .nav a:hover, .nav a.active {
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .nav a .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── MAIN ─── */
+  .main {
+    margin-left: 230px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 5rem 4rem 4rem;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg3) 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: 'REDES';
+    position: absolute;
+    right: -2rem; bottom: -3rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 12rem;
+    color: var(--surface);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.3rem 0.8rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--accent); }
+
+  .hero p {
+    font-size: 1rem;
+    color: var(--text2);
+    max-width: 600px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .hero-meta-item .val {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--accent3);
+    font-weight: 700;
+  }
+
+  .hero-meta-item .key {
+    font-size: 0.72rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── CONTENT AREA ─── */
+  .content { padding: 3rem 4rem; max-width: 1100px; }
+
+  /* ─── UNIT DIVIDER ─── */
+  .unit-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 3rem 0 2rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .unit-divider .unit-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .unit-divider .unit-info {}
+  .unit-divider .unit-info .unit-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text3);
+    margin-bottom: 0.2rem;
+  }
+
+  .unit-divider .unit-info h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--text);
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 3.5rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text3);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .section h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--text); }
+  .section-accent { margin-left: auto; width: 40px; height: 2px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ─── CARDS GRID ─── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .card h3 { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--text); margin-bottom: 0.5rem; }
+  .card p { font-size: 0.84rem; color: var(--text2); line-height: 1.6; }
+
+  /* ─── TIMELINE ─── */
+  .timeline { position: relative; padding-left: 2rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem; top: 0.4rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-year { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); margin-bottom: 0.3rem; }
+  .timeline-item h4 { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+  .timeline-item p { font-size: 0.82rem; color: var(--text2); }
+
+  /* ─── CODE / FORMULA BOX ─── */
+  .formula-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--accent3);
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+
+  .formula-box .comment { color: var(--text3); font-style: italic; }
+
+  /* ─── TABLE ─── */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin: 1rem 0;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  thead { background: var(--surface2); }
+
+  th {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  td { padding: 0.75rem 1rem; color: var(--text2); border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface); color: var(--text); }
+  td:first-child { font-family: 'Space Mono', monospace; color: var(--accent3); font-size: 0.78rem; }
+
+  /* ─── OSI LAYERS ─── */
+  .osi-stack { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .osi-layer {
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .osi-layer:hover { border-color: var(--border); transform: translateX(4px); }
+  .osi-layer .num { font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; text-align: center; }
+  .osi-layer .name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+  .osi-layer .desc { font-size: 0.78rem; color: var(--text2); }
+
+  .l7 { background: rgba(79,142,247,0.12); }
+  .l6 { background: rgba(124,92,252,0.12); }
+  .l5 { background: rgba(34,197,94,0.12); }
+  .l4 { background: rgba(239,68,68,0.12); }
+  .l3 { background: rgba(107,114,128,0.12); }
+  .l2 { background: rgba(234,179,8,0.12); }
+  .l1 { background: rgba(45,212,191,0.12); }
+
+  /* ─── COMPARISON BOXES ─── */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+
+  .compare-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+  }
+
+  .compare-box h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+
+  .compare-box ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .compare-box ul li {
+    font-size: 0.82rem;
+    color: var(--text2);
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .compare-box ul li::before { content: '→'; color: var(--accent3); flex-shrink: 0; font-size: 0.75rem; margin-top: 0.05rem; }
+
+  /* ─── CALLOUT ─── */
+  .callout { display: flex; gap: 1rem; padding: 1rem 1.2rem; border-radius: 8px; margin: 1rem 0; font-size: 0.85rem; }
+  .callout.info { background: rgba(79,142,247,0.08); border: 1px solid rgba(79,142,247,0.25); color: var(--text2); }
+  .callout.tip { background: rgba(45,212,191,0.08); border: 1px solid rgba(45,212,191,0.25); color: var(--text2); }
+  .callout.warning { background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.25); color: var(--text2); }
+  .callout.purple { background: rgba(124,92,252,0.08); border: 1px solid rgba(124,92,252,0.25); color: var(--text2); }
+  .callout.green { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.25); color: var(--text2); }
+  .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* ─── TAG PILLS ─── */
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.8rem 0; }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    background: var(--surface);
+  }
+
+  .tag.blue { border-color: var(--accent); color: var(--accent); }
+  .tag.teal { border-color: var(--accent3); color: var(--accent3); }
+  .tag.orange { border-color: var(--accent4); color: var(--accent4); }
+  .tag.purple { border-color: var(--accent2); color: var(--accent2); }
+  .tag.pink { border-color: var(--accent5); color: var(--accent5); }
+  .tag.yellow { border-color: var(--accent6); color: var(--accent6); }
+  .tag.green { border-color: var(--green); color: var(--green); }
+
+  /* ─── DIVIDER ─── */
+  .divider { height: 1px; background: linear-gradient(to right, var(--border), transparent); margin: 2rem 0; }
+
+  /* ─── HIGHLIGHT TEXT ─── */
+  .hl { color: var(--accent); font-weight: 600; }
+  .hl2 { color: var(--accent3); font-weight: 600; }
+  .hl3 { color: var(--accent4); font-weight: 600; }
+  .hl4 { color: var(--accent5); font-weight: 600; }
+  .hl5 { color: var(--accent6); font-weight: 600; }
+  .hl6 { color: var(--green); font-weight: 600; }
+
+  /* ─── BODY TEXT ─── */
+  .body-text { font-size: 0.9rem; color: var(--text2); line-height: 1.75; margin-bottom: 1rem; }
+
+  /* ─── PROGRESS INDICATOR ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), var(--accent2), var(--accent3));
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 200;
+    transition: transform 0.1s;
+  }
+
+  /* ─── ANIMATION ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SMALL CHIPS ─── */
+  .chip {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent3);
+  }
+
+  /* ─── ASCII DIAGRAM ─── */
+  .ascii-diagram {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text2);
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 1rem 0;
+  }
+
+  /* ─── TIER CARDS ─── */
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
+
+  .tier-card {
+    border-radius: 12px;
+    padding: 1.3rem;
+    border: 1px solid var(--border);
+  }
+
+  .tier-card .tier-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .tier-card h4 { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.6rem; }
+  .tier-card p { font-size: 0.81rem; color: var(--text2); line-height: 1.6; }
+
+  .tier-1 { background: rgba(79,142,247,0.08); }
+  .tier-2 { background: rgba(45,212,191,0.08); }
+  .tier-3 { background: rgba(249,115,22,0.08); }
+  .tier-4 { background: rgba(239,68,68,0.1); }
+
+  /* ─── CONNECTOR TABLE INLINE ─── */
+  .connector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .connector-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .connector-card h4 { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--accent3); margin-bottom: 0.4rem; }
+  .connector-card p { font-size: 0.8rem; color: var(--text2); }
+
+  /* ─── IP HEADER VISUAL ─── */
+  .ip-header-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .ip-field {
+    background: var(--surface2);
+    padding: 0.5rem 0.7rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent3);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .ip-field.wide2 { grid-column: span 2; }
+  .ip-field.wide3 { grid-column: span 3; }
+  .ip-field.wide4 { grid-column: span 4; }
+  .ip-field.highlight { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .ip-field.highlight2 { background: rgba(45,212,191,0.15); color: var(--accent3); }
+
+  /* ─── FOOTER ─── */
+  .page-footer {
+    margin-left: 230px;
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text3);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .nav { display: none; }
+    .main, .page-footer { margin-left: 0; }
+    .content { padding: 2rem; }
+    .hero { padding: 3rem 2rem; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .hero::after { display: none; }
+    .tier-grid { grid-template-columns: 1fr 1fr; }
+    .ip-header-grid { grid-template-columns: repeat(2,1fr); }
+  }
+
+  h3.sub { font-family: 'DM Serif Display', serif; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="pb"></div>
+
+<!-- SIDEBAR -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span class="label">UBA FIUBA</span>
+    <h2>Intro a Telecomunicaciones y Redes</h2>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 1</span>
+    <a href="#historia"><span class="dot" style="background:#4f8ef7"></span>Historia</a>
+    <a href="#conceptored"><span class="dot" style="background:#4f8ef7"></span>Concepto de Red</a>
+    <a href="#tipos-red"><span class="dot" style="background:#4f8ef7"></span>Tipos WAN</a>
+    <a href="#lan"><span class="dot" style="background:#4f8ef7"></span>Redes LAN</a>
+    <a href="#vpn"><span class="dot" style="background:#4f8ef7"></span>VPN</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 2</span>
+    <a href="#señales"><span class="dot" style="background:#7c5cfc"></span>Señales</a>
+    <a href="#nyquist"><span class="dot" style="background:#7c5cfc"></span>Nyquist & ADC</a>
+    <a href="#jerarquia"><span class="dot" style="background:#7c5cfc"></span>Jerarquía SDH</a>
+    <a href="#hamming"><span class="dot" style="background:#7c5cfc"></span>Hamming</a>
+    <a href="#mux"><span class="dot" style="background:#7c5cfc"></span>Multiplexación</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 3</span>
+    <a href="#osi"><span class="dot" style="background:#2dd4bf"></span>Modelo OSI</a>
+    <a href="#capas"><span class="dot" style="background:#2dd4bf"></span>Capas OSI</a>
+    <a href="#tcpip"><span class="dot" style="background:#2dd4bf"></span>TCP/IP</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 4</span>
+    <a href="#par-trenzado"><span class="dot" style="background:#f97316"></span>Par Trenzado</a>
+    <a href="#categorias"><span class="dot" style="background:#f97316"></span>Categorías UTP</a>
+    <a href="#poe"><span class="dot" style="background:#f97316"></span>PoE</a>
+    <a href="#racks"><span class="dot" style="background:#f97316"></span>Racks</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 5</span>
+    <a href="#x25"><span class="dot" style="background:#e879f9"></span>Redes X.25</a>
+    <a href="#atm"><span class="dot" style="background:#e879f9"></span>ATM</a>
+    <a href="#frame-relay"><span class="dot" style="background:#e879f9"></span>Frame Relay</a>
+    <a href="#capa2"><span class="dot" style="background:#e879f9"></span>Capa 2 / Ethernet</a>
+    <a href="#metro"><span class="dot" style="background:#e879f9"></span>Redes Metro</a>
+    <a href="#mpls"><span class="dot" style="background:#e879f9"></span>MPLS</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 6</span>
+    <a href="#ip-def"><span class="dot" style="background:#facc15"></span>Protocolo IP</a>
+    <a href="#ip-tipos"><span class="dot" style="background:#facc15"></span>IP Pública/Privada</a>
+    <a href="#encapsulamiento"><span class="dot" style="background:#facc15"></span>Encapsulamiento</a>
+    <a href="#peering"><span class="dot" style="background:#facc15"></span>Peering & Tránsito</a>
+    <a href="#as"><span class="dot" style="background:#facc15"></span>Sist. Autónomos</a>
+    <a href="#routing"><span class="dot" style="background:#facc15"></span>Routing</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 7</span>
+    <a href="#fibra-tipos"><span class="dot" style="background:#22c55e"></span>Single vs Multi</a>
+    <a href="#flamabilidad"><span class="dot" style="background:#22c55e"></span>Flamabilidad</a>
+    <a href="#conectores-fo"><span class="dot" style="background:#22c55e"></span>Conectores FO</a>
+    <a href="#omx"><span class="dot" style="background:#22c55e"></span>OMx / OS</a>
+    <a href="#pfcs"><span class="dot" style="background:#22c55e"></span>PFCS</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 8</span>
+    <a href="#dc-intro"><span class="dot" style="background:#ef4444"></span>Centro de Datos</a>
+    <a href="#dc-tipos"><span class="dot" style="background:#ef4444"></span>Tipos de DC</a>
+    <a href="#dc-tier"><span class="dot" style="background:#ef4444"></span>Clasificación Tier</a>
+    <a href="#dc-arq"><span class="dot" style="background:#ef4444"></span>Arquitectura</a>
+    <a href="#spine-leaf"><span class="dot" style="background:#ef4444"></span>Spine & Leaf</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 9</span>
+    <a href="#datagrama-ip"><span class="dot" style="background:#38bdf8"></span>Datagrama IP</a>
+    <a href="#cabecera-ipv4"><span class="dot" style="background:#38bdf8"></span>Cabecera IPv4</a>
+    <a href="#clases-ip"><span class="dot" style="background:#38bdf8"></span>Clases de IP</a>
+    <a href="#mascara"><span class="dot" style="background:#38bdf8"></span>Máscara de Red</a>
+    <a href="#enrutamiento-ej"><span class="dot" style="background:#38bdf8"></span>Enrutamiento</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 10</span>
+    <a href="#udp"><span class="dot" style="background:#fb923c"></span>UDP</a>
+    <a href="#tcp-vs-udp"><span class="dot" style="background:#fb923c"></span>TCP vs UDP</a>
+    <a href="#dns"><span class="dot" style="background:#fb923c"></span>DNS</a>
+    <a href="#dhcp"><span class="dot" style="background:#fb923c"></span>DHCP</a>
+    <a href="#http"><span class="dot" style="background:#fb923c"></span>HTTP</a>
+    <a href="#smtp"><span class="dot" style="background:#fb923c"></span>SMTP</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 11</span>
+    <a href="#nfv"><span class="dot" style="background:#a78bfa"></span>NFV</a>
+    <a href="#nfv-evolucion"><span class="dot" style="background:#a78bfa"></span>Evolución VM→NFV</a>
+    <a href="#nfv-5g"><span class="dot" style="background:#a78bfa"></span>NFV en 5G</a>
+    <a href="#edge-iot"><span class="dot" style="background:#a78bfa"></span>Edge & IoT</a>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-section-label">Unidad 12</span>
+    <a href="#bgp"><span class="dot" style="background:#34d399"></span>BGP</a>
+    <a href="#ospf"><span class="dot" style="background:#34d399"></span>OSPF</a>
+    <a href="#ospf-areas"><span class="dot" style="background:#34d399"></span>Áreas OSPF</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-badge">📡 Resumen · 12 Unidades completas</span>
+    <h1>Introducción a las<br><em>Telecomunicaciones</em> y Redes</h1>
+    <p>Guía de estudio completa para la materia. Todos los conceptos, fórmulas, tablas y ejemplos de las unidades 1–12.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="val">12</span><span class="key">Unidades</span></div>
+      <div class="hero-meta-item"><span class="val">7</span><span class="key">Capas OSI</span></div>
+      <div class="hero-meta-item"><span class="val">5</span><span class="key">Clases IP</span></div>
+      <div class="hero-meta-item"><span class="val">Tier IV</span><span class="key">Max DC</span></div>
+      <div class="hero-meta-item"><span class="val">BGP</span><span class="key">Inter-AS</span></div>
+      <div class="hero-meta-item"><span class="val">OSPF</span><span class="key">Intra-AS</span></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══════════════════════════ UNIDAD 1 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--accent)">01</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Historia, Redes LAN, WAN y VPN</h2>
+      </div>
+    </div>
+
+    <section class="section" id="historia">
+      <div class="section-header">
+        <span class="section-number">01.A</span>
+        <h2>Historia de las Telecomunicaciones</h2>
+        <div class="section-accent" style="background: var(--accent)"></div>
+      </div>
+      <p class="body-text">Las telecomunicaciones transformaron radicalmente la comunicación humana. Desde señales de fuego y humo en la Antigüedad hasta la inteligencia artificial en 2022, el progreso fue exponencial.</p>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">~ Antigüedad</div><h4>Señales visuales y acústicas</h4><p>Fuego, humo, tambores, palomas mensajeras (776 a.C.) y semáforos hidráulicos (s. III a.C.).</p></div>
+        <div class="timeline-item"><div class="timeline-year">1792</div><h4>Telégrafo óptico — Chappe</h4><p>Primer sistema práctico de telecomunicaciones modernas. Entró en funcionamiento entre Lille y París en 1794.</p></div>
+        <div class="timeline-item"><div class="timeline-year">1835 – 1844</div><h4>Telégrafo eléctrico</h4><p>Joseph Henry inventa el primer telégrafo eléctrico (1835). Samuel Morse envía el primer mensaje oficial entre Washington y Baltimore en 1844.</p></div>
+        <div class="timeline-item"><div class="timeline-year">1876</div><h4>Teléfono — Alexander Graham Bell</h4><p>Permite la transmisión de voz en tiempo real por primera vez.</p></div>
+        <div class="timeline-item"><div class="timeline-year">~ 1895 / 1901</div><h4>Radio inalámbrica — Marconi</h4><p>Telegrafía inalámbrica y primera transmisión transatlántica.</p></div>
+        <div class="timeline-item"><div class="timeline-year">1971 – 1983</div><h4>ARPANET, Email e Internet</h4><p>Email desde ARPANET (1971). Creación del protocolo TCP/IP (~1974–1983). Adopción definitiva de TCP/IP el 1 de enero de 1983.</p></div>
+        <div class="timeline-item"><div class="timeline-year">1991</div><h4>World Wide Web — Tim Berners-Lee</h4><p>Inicio de la era de la información masiva.</p></div>
+        <div class="timeline-item"><div class="timeline-year">2019 – hoy</div><h4>5G e Inteligencia Artificial</h4><p>Despliegue del 5G. Herramientas como ChatGPT y DALL-E desde 2022.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="conceptored">
+      <div class="section-header"><span class="section-number">01.B</span><h2>Concepto de Red</h2><div class="section-accent" style="background: var(--accent)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🔵 Red de Acceso</h4><ul><li>Conecta usuarios finales</li><li>Domiciliarios: <strong>ADSL, Cablemodem, FTTH</strong></li><li>Corporativo: líneas dedicadas, ATM, Frame Relay, VPN IP</li></ul></div>
+        <div class="compare-box"><h4>🟣 Red de Transporte</h4><ul><li>Conexiones físicas WAN</li><li>Líneas telefónicas, fibra óptica, satélite</li><li>Backbone IP/MPLS</li><li>Cables submarinos de fibra óptica (WDM)</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="tipos-red">
+      <div class="section-header"><span class="section-number">01.C</span><h2>Tipos de Redes WAN</h2><div class="section-accent" style="background: var(--accent)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><h3>Circuitos Conmutados</h3><p>Tipo más antiguo. Crea un <span class="hl2">circuito físico dedicado</span> mientras dura la comunicación.</p></div>
+        <div class="card"><h3>Paquetes Conmutados</h3><p>Datos divididos en <span class="hl2">paquetes</span> que viajan por la mejor ruta. Más eficiente. El más usado hoy.</p></div>
+        <div class="card"><h3>Orientadas a Conexión</h3><p>Se establece conexión extremo a extremo antes de enviar. Se negocia <span class="hl2">ancho de banda y QoS</span>.</p></div>
+        <div class="card"><h3>MPLS</h3><p><span class="hl2">Multi-Protocol Label Switching.</span> Circuitos virtuales con etiquetas para enrutar el tráfico.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="lan">
+      <div class="section-header"><span class="section-number">01.D</span><h2>Redes LAN y WLAN</h2><div class="section-accent" style="background: var(--accent)"></div></div>
+      <p class="body-text">Una <span class="hl">LAN (Local Area Network)</span> conecta dispositivos en un área geográfica reducida. Estándar IEEE 802.3. Una <span class="hl">WLAN</span> usa IEEE 802.11 (Wi-Fi) en 2.4 GHz y 5 GHz.</p>
+      <div class="callout info"><span class="callout-icon">🔀</span><div><strong>VLAN:</strong> Divide una LAN en sub-redes lógicas, reduciendo broadcast. Para comunicar VLANs se necesita un <strong>switch de Capa 3</strong>. Topologías: Bus, Ring, Star (más común), Tree, Mesh, Hybrid.</div></div>
+    </section>
+
+    <section class="section" id="vpn">
+      <div class="section-header"><span class="section-number">01.E</span><h2>Tipos de VPN</h2><div class="section-accent" style="background: var(--accent)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">🏢</div><h3>VPN para Intranet</h3><p>Conexiones de bajo costo mediante túneles entre sucursales de la misma empresa.</p></div>
+        <div class="card"><div class="card-icon">🤝</div><h3>VPN para Extranet</h3><p>Extiende la WAN a socios de negocios (<em>partners</em>). Habilita nuevos modelos de negocio.</p></div>
+        <div class="card"><div class="card-icon">🏠</div><h3>VPN de Acceso Remoto</h3><p>Túneles encriptados y escalables sobre red pública. Ideal para trabajo remoto.</p></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 2 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--accent2)">02</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Señales, Nyquist, SDH y Multiplexación</h2>
+      </div>
+    </div>
+
+    <section class="section" id="señales">
+      <div class="section-header"><span class="section-number">02.A</span><h2>Señales: Analógica vs Digital</h2><div class="section-accent" style="background: var(--accent2)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>〰 Señal Analógica</h4><ul><li>Variable eléctrica continua en el tiempo</li><li>Varía entre un límite inferior y superior</li><li>Para señales periódicas se define el <strong>período T</strong></li><li>Ejemplo: onda sinusoidal</li></ul></div>
+        <div class="compare-box"><h4>▬ Señal Digital</h4><ul><li>Variable eléctrica con dos niveles: <strong>0 ó 1</strong></li><li>Requiere codificación para interpretarse</li><li>Más robusta al ruido que la analógica</li><li>Ejemplo: onda cuadrada</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="nyquist">
+      <div class="section-header"><span class="section-number">02.B</span><h2>Teorema de Nyquist & Conversor A/D</h2><div class="section-accent" style="background: var(--accent2)"></div></div>
+      <div class="formula-box">
+        FM &gt;= 2 × FS<br>
+        <span class="comment">  FM = Frecuencia de Muestreo | FS = Frecuencia de la Señal</span><br>
+        <br>
+        Ejemplo: voz humana (máx ~4 kHz) → FM = 8 kHz (estándar telefónico)
+      </div>
+      <div class="callout tip"><span class="callout-icon">🔢</span><div>Proceso de conversión: <strong>Señal Analógica → MUESTREADOR (a frecuencia FM) → CONVERSOR ADC (valores a binario) → Bits digitales</strong></div></div>
+    </section>
+
+    <section class="section" id="jerarquia">
+      <div class="section-header"><span class="section-number">02.C</span><h2>Jerarquía SDH/SONET</h2><div class="section-accent" style="background: var(--accent2)"></div></div>
+      <p class="body-text">A partir de 8 kHz × 8 bits obtenemos <span class="chip">64 kbps</span> por canal. 32 canales = <span class="chip">2 Mbps = E1</span>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nivel SDH</th><th>Velocidad</th><th>Nivel SONET</th><th>Velocidad</th></tr></thead>
+          <tbody>
+            <tr><td>E1</td><td>2 Mbps</td><td>T1 / DS1</td><td>1.536 Mbps</td></tr>
+            <tr><td>E3</td><td>34 Mbps</td><td>T3 / DS3</td><td>44.736 Mbps</td></tr>
+            <tr><td>STM-1</td><td>155 Mbps</td><td>OC-3</td><td>155.52 Mbps</td></tr>
+            <tr><td>STM-4</td><td>622 Mbps</td><td>OC-12</td><td>622.08 Mbps</td></tr>
+            <tr><td>STM-16</td><td>2.5 Gbps</td><td>OC-48</td><td>2.488 Gbps</td></tr>
+            <tr><td>STM-64</td><td>10 Gbps</td><td>—</td><td>—</td></tr>
+            <tr><td>STM-256</td><td>40 Gbps</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="formula-box">STM-1 = 8000 × (270 columnas × 9 filas × 8 bits) = <span style="color:var(--accent)">155 Mbps</span> | STM-N = N × STM-1</div>
+    </section>
+
+    <section class="section" id="hamming">
+      <div class="section-header"><span class="section-number">02.D</span><h2>Código de Hamming</h2><div class="section-accent" style="background: var(--accent2)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><h3>Distancia de Código</h3><p>Número de bits que deben modificarse para convertir una combinación en otra válida.</p></div>
+        <div class="card"><h3>Capacidad según distancia</h3><p><strong>d=1:</strong> No detecta. <strong>d=2:</strong> Detecta 1 bit. <strong>d=3:</strong> Corrige 1 bit. Para corregir n bits: d = 2n+1.</p></div>
+      </div>
+      <div class="formula-box">
+        M = 4 bits (A, B, C, D) → K bits redundancia: 2^K >= M+K+1 → <span style="color:var(--accent)">K=3</span><br>
+        K1 = M3 XOR M5 XOR M7 | K2 = M3 XOR M6 XOR M7 | K4 = M5 XOR M6 XOR M7
+      </div>
+    </section>
+
+    <section class="section" id="mux">
+      <div class="section-header"><span class="section-number">02.E</span><h2>Multiplexación</h2><div class="section-accent" style="background: var(--accent2)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">⏱</div><h3>TDM — División de Tiempo</h3><p>El canal se divide en <strong>slots de tiempo</strong>. STDM: slots fijos. ATDM: slots dinámicos, más eficiente.</p></div>
+        <div class="card"><div class="card-icon">📻</div><h3>FDM — División de Frecuencia</h3><p>Cada señal se modula en una <strong>frecuencia portadora distinta</strong>. Todas transmiten simultáneamente. Ej: Radio FM.</p></div>
+        <div class="card"><div class="card-icon">🌈</div><h3>WDM — División por Longitud de Onda</h3><p>Usado en <strong>fibra óptica</strong>. Divide la luz en diferentes longitudes de onda, cada una con una señal independiente.</p></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 3 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--accent3)">03</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Modelo OSI y TCP/IP</h2>
+      </div>
+    </div>
+
+    <section class="section" id="osi">
+      <div class="section-header"><span class="section-number">03.A</span><h2>Modelo OSI</h2><div class="section-accent" style="background: var(--accent3)"></div></div>
+      <p class="body-text">El <span class="hl2">modelo OSI (Open Systems Interconnection)</span>, creado por la ISO, divide un sistema de comunicación en <strong>7 capas abstractas</strong>, cada una apilada sobre la inferior.</p>
+      <div class="osi-stack">
+        <div class="osi-layer l7"><span class="num" style="color:var(--accent)">7</span><span class="name">Aplicación</span><span class="desc">HTTP, FTP, SMTP, DHCP, SNMP, POP3</span></div>
+        <div class="osi-layer l6"><span class="num" style="color:var(--accent2)">6</span><span class="name">Presentación</span><span class="desc">ASCII, JPEG, MPEG, cifrado, compresión</span></div>
+        <div class="osi-layer l5"><span class="num" style="color:var(--green)">5</span><span class="name">Sesión</span><span class="desc">NFS, SQL, RPC, X-Window, ASP, SCP</span></div>
+        <div class="osi-layer l4"><span class="num" style="color:var(--red)">4</span><span class="name">Transporte</span><span class="desc">TCP (confiable), UDP (no confiable)</span></div>
+        <div class="osi-layer l3"><span class="num" style="color:#9ca3af">3</span><span class="name">Red</span><span class="desc">IP, IPX — Direccionamiento y enrutamiento</span></div>
+        <div class="osi-layer l2"><span class="num" style="color:var(--yellow)">2</span><span class="name">Enlace de Datos</span><span class="desc">Ethernet, 802.3, Token Ring, HDLC, PPP</span></div>
+        <div class="osi-layer l1"><span class="num" style="color:var(--accent3)">1</span><span class="name">Física</span><span class="desc">Cables, radiofrecuencia, fibra óptica, hubs</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="capas">
+      <div class="section-header"><span class="section-number">03.B</span><h2>Detalle de las Capas OSI</h2><div class="section-accent" style="background: var(--accent3)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon" style="color:var(--accent)">7</div><h3>Aplicación</h3><p>Identifica el partícipe. Protocolos: <strong>FTP, TFTP, HTTP, SMTP, SNMP, DHCP</strong>.</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--accent2)">6</div><h3>Presentación</h3><p>Convierte formatos: <strong>compresión, cifrado, descifrado</strong>. ASCII, JPEG, GIF, MPEG.</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--green)">5</div><h3>Sesión</h3><p>Controla el diálogo entre hosts. Establece, administra y termina sesiones.</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--red)">4</div><h3>Transporte</h3><p><strong>TCP</strong> (confiable, orientado a conexión). <strong>UDP</strong> (no confiable, sin conexión).</p></div>
+        <div class="card"><div class="card-icon" style="color:#9ca3af">3</div><h3>Red</h3><p>Conectividad y selección de ruta. Establece IP origen/destino. Protocolos: <strong>IP, IPX</strong>.</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--yellow)">2</div><h3>Enlace de Datos</h3><p>Direccionamiento físico (MAC). Protocolos: <strong>Ethernet, IEEE 802.3, PPP, HDLC</strong>.</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--accent3)">1</div><h3>Física</h3><p>Especificaciones eléctricas, mecánicas. Estándares: <strong>10BASE-T, 100BASE-TX, 1000BASE-SX</strong>.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="tcpip">
+      <div class="section-header"><span class="section-number">03.C</span><h2>Modelo TCP/IP vs. OSI</h2><div class="section-accent" style="background: var(--accent3)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🔷 Modelo OSI (teórico — 7 capas)</h4><ul><li><strong>7</strong> — Aplicación</li><li><strong>6</strong> — Presentación</li><li><strong>5</strong> — Sesión</li><li><strong>4</strong> — Transporte</li><li><strong>3</strong> — Red</li><li><strong>2</strong> — Enlace de Datos</li><li><strong>1</strong> — Física</li></ul></div>
+        <div class="compare-box"><h4>🔶 Modelo TCP/IP (práctico — 4 capas)</h4><ul><li><strong>4</strong> — Aplicación (=capas 5,6,7 OSI)</li><li><strong>3</strong> — Transporte (TCP/UDP)</li><li><strong>2</strong> — Internet (IP)</li><li><strong>1</strong> — Acceso a la Red (=capas 1,2 OSI)</li></ul></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 4 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--accent4)">04</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Par Trenzado, PoE y Racks</h2>
+      </div>
+    </div>
+
+    <section class="section" id="par-trenzado">
+      <div class="section-header"><span class="section-number">04.A</span><h2>Par Trenzado — Infraestructura de Cobre</h2><div class="section-accent" style="background: var(--accent4)"></div></div>
+      <p class="body-text">El <span class="hl3">cable de par trenzado</span> utiliza pares de cables de cobre entrelazados helicoidalmente. El diseño trenzado reduce la <strong>interferencia electromagnética (EMI)</strong> y la <strong>diafonía (crosstalk)</strong>.</p>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>✅ Ventajas</h4><ul><li>Más económico que la fibra óptica</li><li>Fácil de instalar y flexible</li><li>Reduce diafonía (crosstalk)</li></ul></div>
+        <div class="compare-box"><h4>❌ Desventajas</h4><ul><li>Limitaciones a grandes distancias</li><li>Mayor tasa de error vs. fibra óptica</li><li>Distancia máxima típica: 100 m (Cat 8: 30 m)</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="categorias">
+      <div class="section-header"><span class="section-number">04.B</span><h2>Categorías y Tipos de Cable</h2><div class="section-accent" style="background: var(--accent4)"></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Categoría</th><th>Frecuencia</th><th>Velocidad Máx.</th><th>Distancia Máx.</th><th>Uso Típico</th></tr></thead>
+          <tbody>
+            <tr><td>Cat 5e</td><td>100 MHz</td><td>1 Gbps</td><td>100 m</td><td>Doméstico / video vigilancia</td></tr>
+            <tr><td>Cat 6</td><td>250 MHz</td><td>1/10 Gbps</td><td>100m/55m</td><td>Oficinas</td></tr>
+            <tr><td>Cat 6a</td><td>500 MHz</td><td>10 Gbps</td><td>100 m</td><td>Edificios inteligentes</td></tr>
+            <tr><td>Cat 7</td><td>600 MHz</td><td>10 Gbps</td><td>100 m</td><td>Empresarial (blindado)</td></tr>
+            <tr><td>Cat 8</td><td>2000 MHz</td><td>25–40 Gbps</td><td>30 m</td><td>Data centers</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="poe">
+      <div class="section-header"><span class="section-number">04.C</span><h2>Power Over Ethernet (PoE)</h2><div class="section-accent" style="background: var(--accent4)"></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Estándar</th><th>Año</th><th>Potencia</th><th>Corriente</th><th>Aplicaciones</th></tr></thead>
+          <tbody>
+            <tr><td>IEEE 802.3af (PoE)</td><td>2003</td><td>15 W</td><td>350 mA / 2 pares</td><td>Thin clients, 802.11n</td></tr>
+            <tr><td>IEEE 802.3at (PoE+)</td><td>2009</td><td>30 W</td><td>600 mA / 2 pares</td><td>VoIP, cámaras PTZ</td></tr>
+            <tr><td>IEEE 802.3bt Tipo 3</td><td>2018</td><td>60 W</td><td>1200 mA / 4 pares</td><td>Laptops, 802.11ac</td></tr>
+            <tr><td>IEEE 802.3bt Tipo 4</td><td>2018</td><td>90 W</td><td>1920 mA / 4 pares</td><td>PCs, TVs, videoconferencia</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="racks">
+      <div class="section-header"><span class="section-number">04.D</span><h2>Racks y Estándares</h2><div class="section-accent" style="background: var(--accent4)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>📐 Dimensiones</h4><ul><li>Ancho estándar: <strong>19 pulgadas (48.26 cm)</strong></li><li>Altura: 1U = 1.75 pulgadas (4.45 cm)</li><li>Tamaños comunes: 6U, 12U, 24U, 42U</li></ul></div>
+        <div class="compare-box"><h4>🗄 Tipos de Rack</h4><ul><li><strong>Wall-mount:</strong> Fijado a pared</li><li><strong>Open frame:</strong> Sin puertas, fácil acceso</li><li><strong>Closed cabinet:</strong> Con puertas, mayor seguridad</li></ul></div>
+      </div>
+      <div class="callout tip"><span class="callout-icon">📋</span><div>Estándar más importante: <strong>ANSI/TIA 568</strong>. Cableado estructurado: TIA-568.0 (General), TIA-568.1 (Oficina), TIA-1005 (Industrial), TIA-942 (Data Centers).</div></div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 5 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--accent5)">05</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Redes Legacy, Capa 2 y MPLS</h2>
+      </div>
+    </div>
+
+    <section class="section" id="x25">
+      <div class="section-header"><span class="section-number">05.A</span><h2>Redes X.25 — Legacy</h2><div class="section-accent" style="background: var(--accent5)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><h3>Características</h3><p>Velocidad típica <strong>64 kbps</strong>. Tamaño de paquete variable (128/1024 bytes). Corrección de errores. Basado en retransmisiones.</p></div>
+        <div class="card"><h3>Capas utilizadas</h3><p><strong>Layer 1:</strong> RS-232, V.35. <strong>Layer 2:</strong> LAPB. <strong>Layer 3:</strong> Entrega de paquetes y mantenimiento de circuitos virtuales.</p></div>
+        <div class="card"><h3>Tipos de circuito</h3><p><strong>PVC:</strong> Conexión fija (como línea dedicada).<br><strong>SVC:</strong> Establecido temporalmente.</p></div>
+        <div class="card"><h3>Limitaciones</h3><p>Mucha sobrecarga. No óptima para tiempo real. Usado en cajeros automáticos y puntos de venta.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="atm">
+      <div class="section-header"><span class="section-number">05.B</span><h2>Redes ATM — Asynchronous Transfer Mode</h2><div class="section-accent" style="background: var(--accent5)"></div></div>
+      <p class="body-text">ATM usa una <span class="hl4">celda fija de 53 bytes (48 + 5)</span>. Fue pionera en QoS, permitiendo transportar video, voz y datos.</p>
+      <div class="cards-grid">
+        <div class="card"><h3>Campos de la celda ATM</h3><p><strong>VPI:</strong> Identificador de Ruta Virtual.<br><strong>VCI:</strong> Identificador de Canal Virtual (16 bits).<br><strong>CLP:</strong> Prioridad de pérdida de celda.<br><strong>HEC:</strong> Control de errores CRC 8 bits.</p></div>
+        <div class="card"><h3>Clases de servicio QoS</h3><p><strong>CBR:</strong> Velocidad constante.<br><strong>VBR:</strong> Velocidad variable.<br><strong>ABR:</strong> Velocidad disponible (mínima garantizada).<br><strong>UBR:</strong> No especificada, más económico.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="frame-relay">
+      <div class="section-header"><span class="section-number">05.C</span><h2>Frame Relay</h2><div class="section-accent" style="background: var(--accent5)"></div></div>
+      <p class="body-text">Red basada en <span class="hl4">conmutación de paquetes</span>. Tramas de longitud variable. Más eficiente que X.25. Muy utilizado como reemplazo de X.25 para tráfico en ráfagas. Hoy ya no es comercial en la mayoría de geografías.</p>
+    </section>
+
+    <section class="section" id="capa2">
+      <div class="section-header"><span class="section-number">05.D</span><h2>Capa 2 y Ethernet 802.3</h2><div class="section-accent" style="background: var(--accent5)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><h3>Funciones principales</h3><p>Direccionamiento físico MAC. Detección de errores (CRC). Control de flujo. CSMA/CD (Ethernet), CSMA/CA (Wi-Fi).</p></div>
+        <div class="card"><h3>Trama Ethernet 802.3</h3><p>MAC destino (6B) + MAC origen (6B) + Tipo (2B) + Datos + FCS/CRC (4B). Mínimo 64 bytes, máximo 1518 bytes.</p></div>
+        <div class="card"><h3>STP — Spanning Tree</h3><p>Evita bucles en redes con switches redundantes. Bloquea selectivamente puertos. Previene tormentas de broadcast.</p></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Estándar</th><th>Velocidad</th><th>Nombre</th></tr></thead>
+          <tbody>
+            <tr><td>10BASE-T</td><td>10 Mbps</td><td>Ethernet</td></tr>
+            <tr><td>100BASE-TX</td><td>100 Mbps</td><td>Fast Ethernet</td></tr>
+            <tr><td>1000BASE-T</td><td>1 Gbps</td><td>Gigabit Ethernet</td></tr>
+            <tr><td>10GBASE-T</td><td>10 Gbps</td><td>10 Gigabit Ethernet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="metro">
+      <div class="section-header"><span class="section-number">05.E</span><h2>Redes Metro Ethernet</h2><div class="section-accent" style="background: var(--accent5)"></div></div>
+      <p class="body-text">Una <span class="hl4">Red Metro Ethernet (MAN)</span> es una arquitectura de red de capa 2 que permite la interconexión de redes LAN extendidas. Multiservicio: soporta Telefonía IP y Video IP.</p>
+      <div class="callout warning"><span class="callout-icon">⚠️</span><div><strong>Jitter:</strong> Variación en la entrega de paquetes. Diferencia entre el momento de transmisión y recepción. Se mide en ms. El tráfico de voz y video es especialmente sensible.</div></div>
+    </section>
+
+    <section class="section" id="mpls">
+      <div class="section-header"><span class="section-number">05.F</span><h2>Redes MPLS</h2><div class="section-accent" style="background: var(--accent5)"></div></div>
+      <p class="body-text"><span class="hl4">MPLS (Multiprotocol Label Switching)</span> dirige paquetes usando <strong>etiquetas (labels)</strong> en lugar de direcciones IP completas.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Componente</th><th>Significado</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td>LER</td><td>Label Edge Router</td><td>Añade o quita etiquetas (push/pop)</td></tr>
+            <tr><td>LSR</td><td>Label Switch Router</td><td>Reenvía paquetes según la etiqueta</td></tr>
+            <tr><td>Label</td><td>Etiqueta (número)</td><td>Determina el camino por la red MPLS</td></tr>
+            <tr><td>FEC</td><td>Forwarding Equivalence Class</td><td>Todo el tráfico con misma etiqueta = misma FEC</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 6 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--accent6)">06</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Protocolo IP — Capa 3</h2>
+      </div>
+    </div>
+
+    <section class="section" id="ip-def">
+      <div class="section-header"><span class="section-number">06.A</span><h2>Definición y Funciones del Protocolo IP</h2><div class="section-accent" style="background: var(--accent6)"></div></div>
+      <p class="body-text"><span class="hl5">IP (Internet Protocol)</span> — protocolo de capa 3, sin conexión y no confiable. Nacimiento: Vinton Cerf y Robert Kahn (1973), RFC 791 en 1981. ARPANET adoptó TCP/IP el <strong>1 de enero de 1983</strong>.</p>
+      <div class="cards-grid">
+        <div class="card"><h3>1. Direccionamiento</h3><p>Asigna IP única a cada dispositivo. Ej: 192.168.1.10 con máscara 255.255.255.0 → red 192.168.1.0</p></div>
+        <div class="card"><h3>2. Encapsulamiento</h3><p>Recibe datos de TCP/UDP, los empaqueta en datagrama IP, y lo envía a capa de enlace (Ethernet).</p></div>
+        <div class="card"><h3>3. Fragmentación</h3><p>Si el paquete supera la MTU (Ethernet = 1500 bytes), IP puede dividirlo en fragmentos.</p></div>
+        <div class="card"><h3>4. Ruteo (Routing)</h3><p>Envía paquetes por tablas de enrutamiento. Protocolos: <strong>OSPF, BGP, EIGRP, RIP</strong>.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="ip-tipos">
+      <div class="section-header"><span class="section-number">06.B</span><h2>IP Pública vs. Privada</h2><div class="section-accent" style="background: var(--accent6)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🌐 IP Pública</h4><ul><li>Única a nivel mundial</li><li>Identifica un dispositivo en Internet</li><li>Asignada por: ARIN, RIPE NCC, LACNIC, AfriNIC, APNIC</li></ul></div>
+        <div class="compare-box"><h4>🔒 IP Privada</h4><ul><li>Se usa dentro de una red local (LAN)</li><li>No válida para comunicarse directamente en Internet</li><li>También se aplica a nivel WAN con VPN IP</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="encapsulamiento">
+      <div class="section-header"><span class="section-number">06.C</span><h2>Encapsulamiento IP sobre Capas Inferiores</h2><div class="section-accent" style="background: var(--accent6)"></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Transporte físico</th><th>Encapsulamiento</th><th>Uso común</th></tr></thead>
+          <tbody>
+            <tr><td>Ethernet</td><td>Trama Ethernet (802.3)</td><td>LAN, WAN</td></tr>
+            <tr><td>MPLS</td><td>Label Stack antes de IP (4 bytes)</td><td>WAN, core IP</td></tr>
+            <tr><td>ATM</td><td>Celdas fijas de 53 bytes + AAL5 para IP</td><td>Redes legacy</td></tr>
+            <tr><td>POS (Packet over SONET/SDH)</td><td>IP sobre HDLC o PPP sobre SONET</td><td>Backbone óptico</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="peering">
+      <div class="section-header"><span class="section-number">06.D</span><h2>Peering y Tránsito IP</h2><div class="section-accent" style="background: var(--accent6)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🤝 Peering IP</h4><ul><li>Acuerdo bilateral para intercambiar tráfico <strong>sin pagarle a terceros</strong></li><li>Relación entre iguales (peers)</li><li>Reduce costos y mejora latencia</li><li>Se establece en IXP mediante fibra óptica</li></ul></div>
+        <div class="compare-box"><h4>🌍 Tránsito IP</h4><ul><li>Servicio pago de proveedor de mayor jerarquía</li><li>Usa <strong>BGP</strong> para intercambio de rutas</li><li>Se cobra por ancho de banda (Mbps/Gbps)</li><li>Incluye SLA con garantías de disponibilidad</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="as">
+      <div class="section-header"><span class="section-number">06.E</span><h2>Sistemas Autónomos (AS)</h2><div class="section-accent" style="background: var(--accent6)"></div></div>
+      <p class="body-text">Un <span class="hl5">Sistema Autónomo (AS)</span> es un conjunto de redes administradas por la misma entidad, con un número único (ASN). Es el "DNI" de una red para identificarse en Internet. Los routers de distintos AS se comunican mediante <strong>BGP</strong>. Autoridad máxima: <strong>IANA</strong>. En Latinoamérica: <strong>LACNIC</strong>.</p>
+    </section>
+
+    <section class="section" id="routing">
+      <div class="section-header"><span class="section-number">06.F</span><h2>Tipos de Routing IP</h2><div class="section-accent" style="background: var(--accent6)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>📌 Enrutamiento Estático</h4><ul><li>Rutas configuradas manualmente</li><li>Simple, funciona bien en redes pequeñas</li><li>No se actualiza automáticamente</li><li>Más seguro por defecto</li></ul></div>
+        <div class="compare-box"><h4>🔄 Enrutamiento Dinámico</h4><ul><li>Los routers intercambian info automáticamente</li><li>Actualiza tablas ante cambios o fallos</li><li>Ideal para redes grandes</li><li>Protocolos: OSPF, BGP, EIGRP, RIP</li></ul></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 7 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--green)">07</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Infraestructura — Tecnologías de Fibra Óptica</h2>
+      </div>
+    </div>
+
+    <section class="section" id="fibra-tipos">
+      <div class="section-header"><span class="section-number">07.A</span><h2>Fibra Óptica: Single Mode vs. Multimode</h2><div class="section-accent" style="background: var(--green)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🔵 Single Mode (SM)</h4><ul><li>Núcleo de <strong>9 µm</strong></li><li>Un solo camino de luz (recto)</li><li>Mayor distancia, menor atenuación</li><li>Color: <strong>azul (UPC) / verde (APC)</strong></li><li>Usado en backbone y telco</li></ul></div>
+        <div class="compare-box"><h4>🟡 Multimode (MM)</h4><ul><li>Núcleo de <strong>50 µm o 62.5 µm</strong></li><li>Múltiples caminos de luz (rebotes)</li><li>Menor distancia, mayor dispersión</li><li>Color: <strong>beige</strong></li><li>Usado en redes locales y data centers</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section" id="flamabilidad">
+      <div class="section-header"><span class="section-number">07.B</span><h2>Flamabilidad de Cables</h2><div class="section-accent" style="background: var(--green)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><h3>Área Plenum</h3><p>Espacio entre plafón y loza. Requiere cables <strong>CMP</strong>: no crean llamas, muy poco humo.</p></div>
+        <div class="card"><h3>Área Riser</h3><p>Espacio vertical de piso a piso. Requiere cables <strong>CMR</strong>: pueden crear llama pero se apagan antes del metro y medio.</p></div>
+        <div class="card"><h3>Libres de Halógenos</h3><p>Evitan humo tóxico de flúor, cloro, bromo, yodo y astato. Reducen toxicidad en caso de incendio.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="conectores-fo">
+      <div class="section-header"><span class="section-number">07.C</span><h2>Conectores de Fibra Óptica</h2><div class="section-accent" style="background: var(--green)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><h3>PC (Physical Contact)</h3><p>Ligera curvatura. Pérdida de retorno: <strong>-30 a -40 dB</strong>.</p></div>
+        <div class="card"><h3>UPC (Ultra PC)</h3><p>Curvatura más pronunciada. Pérdida: <strong>-40 a -55 dB</strong>. Ideal para TV y data.</p></div>
+        <div class="card"><h3>APC (Angled PC)</h3><p>Ángulo de 8°. Pérdida: <strong>-60 dB</strong>. Máxima calidad.</p></div>
+      </div>
+      <div class="connector-grid">
+        <div class="connector-card"><h4>SC (Standard Connector)</h4><p>Push-pull, cerámica. Pérdida: 0.25 dB. TV por cable y telefonía.</p></div>
+        <div class="connector-card"><h4>LC (Lucent Connector)</h4><p>Férula 1.25 mm. Pérdida: 0.10 dB. Alta densidad: 50% menos espacio que SC.</p></div>
+        <div class="connector-card"><h4>ST (Straight Tip)</h4><p>Bayoneta, 2.5 mm. Campus y redes corporativas.</p></div>
+        <div class="connector-card"><h4>FC (Ferrule Connector)</h4><p>Sistema de rosca. Entornos de alta vibración.</p></div>
+        <div class="connector-card"><h4>MTRJ</h4><p>Conector dúplex (2 fibras). Cuerpo de polímero.</p></div>
+        <div class="connector-card"><h4>MPO (Multi-fiber Push-on)</h4><p>12-24 fibras en una sola férula. Para 40G, 100G, 400G Ethernet paralela.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="omx">
+      <div class="section-header"><span class="section-number">07.D</span><h2>Clasificación OMx y OSx de Fibra</h2><div class="section-accent" style="background: var(--green)"></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Diámetro núcleo</th><th>850 nm (saturada)</th><th>850 nm (EMB)</th></tr></thead>
+          <tbody>
+            <tr><td>OM1</td><td>62.5 µm</td><td>200 MHz·km</td><td>No especificado</td></tr>
+            <tr><td>OM2</td><td>50 µm</td><td>500 MHz·km</td><td>No especificado</td></tr>
+            <tr><td>OM3</td><td>50 µm</td><td>1500 MHz·km</td><td>2.000 MHz·km</td></tr>
+            <tr><td>OM4</td><td>50 µm</td><td>3500 MHz·km</td><td>4.700 MHz·km</td></tr>
+            <tr><td>OM5</td><td>50 µm</td><td>3500 MHz·km</td><td>4.700 MHz·km + 953 nm</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="pfcs">
+      <div class="section-header"><span class="section-number">07.E</span><h2>PFCS — Powered Fiber Cable System</h2><div class="section-accent" style="background: var(--green)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">📏</div><h3>Alcances</h3><p>PoE estándar: hasta 3 km. PoE+: 1.6 km. Solución de bajo voltaje (-48V DC) con fuente centralizada y backup UPS.</p></div>
+        <div class="card"><div class="card-icon">📋</div><h3>Aplicaciones</h3><p>Optical LAN, cámaras HD, señalización digital, puntos Wi-Fi, small cells. Ideal para campus y aeropuertos.</p></div>
+        <div class="card"><div class="card-icon">✅</div><h3>Ventajas</h3><p>Administra hasta 32 dispositivos simultáneamente. Bajo costo. Si hay rotura parcial del cobre, el enlace sigue transmitiendo.</p></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 8 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:var(--red)">08</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Redes en el Centro de Datos</h2>
+      </div>
+    </div>
+
+    <section class="section" id="dc-intro">
+      <div class="section-header"><span class="section-number">08.A</span><h2>Introducción al Centro de Datos (DC)</h2><div class="section-accent" style="background: var(--red)"></div></div>
+      <p class="body-text">Un <span class="hl" style="color:var(--red)">Centro de Datos</span> es una sala física, edificio o instalación que alberga infraestructura informática para crear, ejecutar y entregar aplicaciones y servicios.</p>
+      <div class="callout info"><span class="callout-icon">📊</span><div><strong>Países con más DC (Oct 2023):</strong> EE.UU. (5.376), Alemania (522), Reino Unido (517), China (448), Australia (306). <strong>Por potencia:</strong> Pequeños (&lt;20 MW), Medianos (50-100 MW), Grandes (&gt;100 MW).</div></div>
+    </section>
+
+    <section class="section" id="dc-tipos">
+      <div class="section-header"><span class="section-number">08.B</span><h2>Tipos de Centro de Datos</h2><div class="section-accent" style="background: var(--red)"></div></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">🏢</div><h3>Enterprise</h3><p>Infraestructura IT on-premises. Mayor control. Ej: Bancos, aseguradoras, organismos gubernamentales.</p></div>
+        <div class="card"><div class="card-icon">☁️</div><h3>Cloud / Hyperscale</h3><p>Infraestructura compartida vía Internet. Ej: Google, Amazon AWS, Microsoft Azure, Oracle.</p></div>
+        <div class="card"><div class="card-icon">🌐</div><h3>Telco / Collocation</h3><p>Instalaciones de un Operador donde empresas alojan sus servidores. Ej: Telecom, ARSAT.</p></div>
+        <div class="card"><div class="card-icon">📡</div><h3>Edge Datacenter</h3><p>Procesamiento en el borde, más cerca del usuario. Reduce latencia. Sectores bancario y retail.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="dc-tier">
+      <div class="section-header"><span class="section-number">08.C</span><h2>Clasificación Tier — Uptime Institute</h2><div class="section-accent" style="background: var(--red)"></div></div>
+      <div class="tier-grid">
+        <div class="tier-card tier-1"><span class="tier-badge" style="color:var(--accent)">TIER I</span><h4>Capacidades Básicas</h4><p>Requieren paradas completas para mantenimiento. Sin redundancia.</p></div>
+        <div class="tier-card tier-2"><span class="tier-badge" style="color:var(--accent3)">TIER II</span><h4>Componentes Redundantes</h4><p>Requiere Generador y UPS redundantes N+1. Las fallas pueden afectar servicios.</p></div>
+        <div class="tier-card tier-3"><span class="tier-badge" style="color:var(--accent4)">TIER III</span><h4>Mantenimiento Simultáneo</h4><p>Componentes eliminables sin afectar operaciones. Combustible para 72 horas.</p></div>
+        <div class="tier-card tier-4"><span class="tier-badge" style="color:var(--red)">TIER IV</span><h4>Tolerante a Fallas</h4><p>Una falla de cualquier equipo no afecta operaciones. Dos proveedores de telecomunicaciones.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="dc-arq">
+      <div class="section-header"><span class="section-number">08.D</span><h2>Arquitectura y Estándares del DC</h2><div class="section-accent" style="background: var(--red)"></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Sigla</th><th>Nombre</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td>ER</td><td>Entrance Room</td><td>Cuarto de entrada de servicios</td></tr>
+            <tr><td>MDA</td><td>Main Distribution Area</td><td>Área de distribución principal (core/spine)</td></tr>
+            <tr><td>IDA</td><td>Intermediate Distribution Area</td><td>Área de distribución intermedia</td></tr>
+            <tr><td>ZDA</td><td>Zone Distribution Area</td><td>Área de distribución de zona</td></tr>
+            <tr><td>EDA</td><td>Equipment Distribution Area</td><td>Área donde se ubican servidores y storage</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="spine-leaf">
+      <div class="section-header"><span class="section-number">08.E</span><h2>Arquitecturas de Conectividad</h2><div class="section-accent" style="background: var(--red)"></div></div>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>📐 Modelo Tradicional (3 capas)</h4><ul><li>Core → Aggregation → Access Layer</li><li>Tráfico "Norte a Sur"</li><li>Poco eficiente para baja latencia</li></ul></div>
+        <div class="compare-box"><h4>🍃 Modelo Spine & Leaf</h4><ul><li>Spine Layer + Leaf Layer</li><li>Menor latencia: tráfico "Este a Oeste"</li><li>Más resiliente y mayor ancho de banda</li><li>Ideal para entornos virtualizados y cloud</li></ul></div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 9 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:#38bdf8">09</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Datagrama IP, Direccionamiento IPv4 y Clases</h2>
+      </div>
+    </div>
+
+    <section class="section" id="datagrama-ip">
+      <div class="section-header"><span class="section-number">09.A</span><h2>El Datagrama IP</h2><div class="section-accent" style="background: #38bdf8"></div></div>
+      <p class="body-text">Internet es un conjunto de redes diferentes que comparten una pila de protocolos comunes. IP es una red de datagramas, <span class="hl">no orientada a conexión</span>, con servicio <strong>'best effort'</strong>: no ofrece QoS, la entrega no está garantizada, y en momentos de congestión los paquetes pueden descartarse sin previo aviso.</p>
+      <p class="body-text">En una red IP toda la información viaja en datagramas IP, incluyendo tráfico TCP, UDP y protocolos de control (ruteo dinámico, mensajes de error ICMP, etc.).</p>
+      <div class="callout info"><span class="callout-icon">📦</span><div><strong>Estructura del Datagrama IP:</strong> Tiene dos partes: <strong>cabecera</strong> y <strong>texto (payload)</strong>. La cabecera tiene una parte fija de <strong>20 bytes</strong> y una parte opcional de entre 0 y 40 bytes. La longitud total siempre es múltiplo de 4 bytes (frontera de 32 bits), para procesamiento eficiente.</div></div>
+    </section>
+
+    <section class="section" id="cabecera-ipv4">
+      <div class="section-header"><span class="section-number">09.B</span><h2>Cabecera IPv4 — Campos</h2><div class="section-accent" style="background: #38bdf8"></div></div>
+      <p class="body-text">La cabecera IPv4 tiene una estructura bien definida. Cada fila del diagrama ocupa 32 bits (4 bytes):</p>
+
+      <div class="ip-header-grid">
+        <div class="ip-field highlight">Versión (4 bits)</div>
+        <div class="ip-field highlight">IHL (4 bits)</div>
+        <div class="ip-field wide2 highlight2">Service Type / DS (8 bits)</div>
+        <div class="ip-field wide4 highlight2">Longitud Total (16 bits)</div>
+        <div class="ip-field wide2">Identificación (16 bits)</div>
+        <div class="ip-field">Flags (3 bits)</div>
+        <div class="ip-field">Fragment Offset (13 bits)</div>
+        <div class="ip-field highlight">TTL (8 bits)</div>
+        <div class="ip-field highlight">Protocolo (8 bits)</div>
+        <div class="ip-field wide2 highlight2">Header Checksum (16 bits)</div>
+        <div class="ip-field wide4">Source IP Address (32 bits)</div>
+        <div class="ip-field wide4">Destination IP Address (32 bits)</div>
+        <div class="ip-field wide3">Options (0-320 bits)</div>
+        <div class="ip-field">Padding</div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Campo</th><th>Bits</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td>Versión</td><td>4</td><td>Versión del protocolo IP (4 para IPv4)</td></tr>
+            <tr><td>IHL (Internet Header Length)</td><td>4</td><td>Longitud de la cabecera en palabras de 32 bits</td></tr>
+            <tr><td>DS (Differentiated Services)</td><td>8</td><td>Tipo de servicio / QoS</td></tr>
+            <tr><td>Longitud total</td><td>16</td><td>Tamaño total del datagrama (cabecera + datos)</td></tr>
+            <tr><td>Identificación</td><td>16</td><td>Identifica los fragmentos de un mismo datagrama</td></tr>
+            <tr><td>Reservado</td><td>1</td><td>Siempre 0</td></tr>
+            <tr><td>DF (Don't Fragment)</td><td>1</td><td>Si está en 1, no se puede fragmentar el paquete</td></tr>
+            <tr><td>MF (More Fragments)</td><td>1</td><td>Si está en 1, hay más fragmentos por venir</td></tr>
+            <tr><td>Fragment Offset</td><td>13</td><td>Posición del fragmento dentro del datagrama original</td></tr>
+            <tr><td>TTL (Time To Live)</td><td>8</td><td>Número máximo de saltos. Se decrementa en cada router</td></tr>
+            <tr><td>Protocolo de transporte</td><td>8</td><td>Indica el protocolo superior: 6=TCP, 17=UDP, 1=ICMP</td></tr>
+            <tr><td>Checksum de cabecera</td><td>16</td><td>Verificación de integridad de la cabecera</td></tr>
+            <tr><td>Dirección de origen</td><td>32</td><td>IP del host que envía el datagrama</td></tr>
+            <tr><td>Dirección de destino</td><td>32</td><td>IP del host receptor</td></tr>
+            <tr><td>Opciones</td><td>0-320</td><td>Campos opcionales (timestamp, routing estricto, etc.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip"><span class="callout-icon">🌐</span><div>El campo <strong>Protocolo</strong> en la cabecera IP indica qué protocolo de capa superior se está usando: TCP (6), UDP (17), ICMP (1). Esto permite a la capa de red saber a quién entregar el payload al llegar al destino.</div></div>
+
+      <h3 class="sub">Stack de Protocolos TCP/IP</h3>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon" style="color:var(--accent)">App</div><h3>Capa de Aplicación</h3><p>DNS, BOOTP, DHCP, SMTP, POP, IMAP, FTP, TFTP, HTTP</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--red)">Transp.</div><h3>Capa de Transporte</h3><p>UDP, TCP</p></div>
+        <div class="card"><div class="card-icon" style="color:#9ca3af">Red</div><h3>Capa de Internet</h3><p>IP, NAT, ICMP, OSPF, EIGRP (protocolos de enrutamiento)</p></div>
+        <div class="card"><div class="card-icon" style="color:var(--yellow)">Acceso</div><h3>Capa de Acceso a la Red</h3><p>ARP, PPP, Ethernet, controladores de interfaz</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="clases-ip">
+      <div class="section-header"><span class="section-number">09.C</span><h2>Clases de Direcciones IP</h2><div class="section-accent" style="background: #38bdf8"></div></div>
+      <p class="body-text">Una dirección IP es un número de <span class="hl" style="color:#38bdf8">32 bits</span> expresado en formato decimal punteado (4 octetos). Ejemplo: <span class="chip">192.168.123.132</span> equivale a <span class="chip">11000000.10101000.01111011.10000100</span> en binario.</p>
+
+      <div class="callout info"><span class="callout-icon">📝</span><div>Para configurar TCP/IP en un dispositivo se necesitan tres elementos: <strong>Dirección IP</strong>, <strong>Máscara de Subred</strong> y <strong>Puerta de Enlace (Gateway)</strong>.</div></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Clase</th><th>Primer Octeto</th><th>Bits de Red</th><th>Bits de Host</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Clase A</td><td>0 – 127</td><td>8 bits (1 octeto)</td><td>24 bits (3 octetos)</td><td>Grandes redes en Internet</td></tr>
+            <tr><td>Clase B</td><td>128 – 191</td><td>16 bits (2 octetos)</td><td>16 bits (2 octetos)</td><td>Redes moderadas</td></tr>
+            <tr><td>Clase C</td><td>192 – 223</td><td>24 bits (3 octetos)</td><td>8 bits (1 octeto)</td><td>Redes pequeñas</td></tr>
+            <tr><td>Clase D</td><td>224 – 239</td><td>—</td><td>—</td><td>Multicast</td></tr>
+            <tr><td>Clase E</td><td>240 – 255</td><td>—</td><td>—</td><td>Solo experimental</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip"><span class="callout-icon">💡</span><div><strong>Ejemplo Clase C:</strong> La dirección <span class="chip">192.168.100.50/24</span> pertenece a Clase C (primer octeto 192, entre 192-223). Los primeros 24 bits son la red y los últimos 8 bits identifican el host. La red es <span class="chip">192.168.100.0</span>.</div></div>
+    </section>
+
+    <section class="section" id="mascara">
+      <div class="section-header"><span class="section-number">09.D</span><h2>Máscara de Red y Operación AND</h2><div class="section-accent" style="background: #38bdf8"></div></div>
+      <p class="body-text">La <span class="hl" style="color:#38bdf8">máscara de subred</span> identifica qué porción de una dirección IPv4 corresponde a la red y cuál al host. Se aplica mediante una operación lógica <strong>AND bit a bit</strong> entre la dirección IP y la máscara para obtener la dirección de red.</p>
+
+      <div class="formula-box">
+        Dirección IP:    192  .  168  .  10  .  10<br>
+        Binario:         11000000 10101000 00001010 00001010<br>
+        <br>
+        Máscara /24:     255  .  255  .  255  .  0<br>
+        Binario:         11111111 11111111 11111111 00000000<br>
+        <br>
+        AND bit a bit:   11000000 10101000 00001010 00000000<br>
+        <span class="comment">  → Dirección de Red Resultante: 192.168.10.0</span>
+      </div>
+
+      <div class="callout info"><span class="callout-icon">⚡</span><div>Reglas del AND: 1 AND 1 = 1 · 0 AND 1 = 0 · 0 AND 0 = 0 · 1 AND 0 = 0</div></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Máscara de subred</th><th>Notación CIDR</th><th>Bits de host disponibles</th></tr></thead>
+          <tbody>
+            <tr><td>255.0.0.0</td><td>/8</td><td>24 bits → 16.777.214 hosts</td></tr>
+            <tr><td>255.255.0.0</td><td>/16</td><td>16 bits → 65.534 hosts</td></tr>
+            <tr><td>255.255.255.0</td><td>/24</td><td>8 bits → 254 hosts</td></tr>
+            <tr><td>255.255.255.128</td><td>/25</td><td>7 bits → 126 hosts</td></tr>
+            <tr><td>255.255.255.192</td><td>/26</td><td>6 bits → 62 hosts</td></tr>
+            <tr><td>255.255.255.224</td><td>/27</td><td>5 bits → 30 hosts</td></tr>
+            <tr><td>255.255.255.240</td><td>/28</td><td>4 bits → 14 hosts</td></tr>
+            <tr><td>255.255.255.248</td><td>/29</td><td>3 bits → 6 hosts</td></tr>
+            <tr><td>255.255.255.252</td><td>/30</td><td>2 bits → 2 hosts</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="enrutamiento-ej">
+      <div class="section-header"><span class="section-number">09.E</span><h2>Ejemplo Básico de Enrutamiento de Paquetes</h2><div class="section-accent" style="background: #38bdf8"></div></div>
+      <p class="body-text">El <span class="hl" style="color:#38bdf8">Gateway predeterminado</span> identifica la dirección IPv4 de la interfaz del router local para llegar a redes remotas. Cuando un host necesita comunicarse con un destino fuera de su red, envía el paquete al gateway, quien lo encamina hacia su destino.</p>
+      <div class="callout tip"><span class="callout-icon">🔀</span><div><strong>Lógica de enrutamiento:</strong> El host D (200.3.107.200) quiere enviar un paquete al host B (10.10.0.7). Como las redes son distintas, D envía el paquete a su router (R2). R2 tiene conocimiento de la Red 2 (10.10.0.0) y entrega el paquete directamente a B, sin necesidad de otro salto.</div></div>
+      <div class="ascii-diagram">Red 1 (192.168.0.x)          Red 2 (10.10.0.x)          Red 3 (200.3.107.x)
+      [A]──────[R1]──────────────────[R2]──────────[C]
+   192.168.0.10    192.168.0.1   10.10.0.1   200.3.107.1
+                   10.10.0.1    10.10.0.2   200.3.107.73
+                                [B]                 [D]
+                              10.10.0.7        200.3.107.200
+
+ D → B:  D detecta red diferente → envía a gateway R2 → R2 entrega a B directamente</div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 10 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:#fb923c">10</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Protocolos de Capa 4 y Aplicación: UDP, TCP, DNS, DHCP, HTTP, SMTP</h2>
+      </div>
+    </div>
+
+    <section class="section" id="udp">
+      <div class="section-header"><span class="section-number">10.A</span><h2>UDP — User Datagram Protocol</h2><div class="section-accent" style="background: #fb923c"></div></div>
+      <p class="body-text"><span class="hl3">UDP</span> es uno de los protocolos principales de la Capa de Transporte. Fue diseñado para proporcionar una manera <strong>simple y eficiente</strong> de enviar datagramas sin establecer una conexión previa ni realizar controles complejos de errores.</p>
+
+      <h3 class="sub">Formato del Encabezado UDP</h3>
+      <div class="cards-grid">
+        <div class="card"><h3>Puerto de origen (16 bits)</h3><p>Indica el puerto del emisor.</p></div>
+        <div class="card"><h3>Puerto de destino (16 bits)</h3><p>Indica el puerto del receptor.</p></div>
+        <div class="card"><h3>Longitud (16 bits)</h3><p>Especifica el tamaño total del segmento UDP (cabecera + datos).</p></div>
+        <div class="card"><h3>Checksum (16 bits)</h3><p>Valor de verificación para detectar errores simples en el encabezado y los datos.</p></div>
+      </div>
+
+      <h3 class="sub">Rangos de Puertos UDP</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rango</th><th>Nombre</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>0 – 1023</td><td>Puertos bien conocidos</td><td>Reservados para servicios del sistema (DNS: 53, DHCP: 67/68, NTP: 123)</td></tr>
+            <tr><td>1024 – 49151</td><td>Puertos registrados</td><td>Asignados por IANA para aplicaciones específicas</td></tr>
+            <tr><td>49152 – 65535</td><td>Dinámicos / privados</td><td>Disponibles para uso temporal (puertos efímeros)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Proceso de Comunicación UDP</h3>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">Paso 1</div><h4>Preparación inicial</h4><p>La aplicación emisora crea un socket UDP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 2</div><h4>Encapsulación del mensaje</h4><p>Los datos de la aplicación se encapsulan en un datagrama UDP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 3</div><h4>Envío al nivel de red</h4><p>El datagrama UDP se pasa al protocolo IP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 4</div><h4>Transporte por la red</h4><p>El paquete viaja por la red usando el enrutamiento IP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 5</div><h4>Recepción en el destino</h4><p>El host destino recibe el paquete IP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 6</div><h4>Entrega a la aplicación</h4><p>UDP identifica la aplicación destino usando el número de puerto.</p></div>
+      </div>
+
+      <h3 class="sub">Ventajas y Desventajas</h3>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>✅ Ventajas UDP</h4><ul><li><strong>Baja latencia:</strong> sin handshake ni establecimiento de conexión</li><li><strong>Menor sobrecarga:</strong> cabecera simple (solo 8 bytes)</li><li><strong>Simplicidad:</strong> fácil implementación, menos código</li><li><strong>Sin control de flujo:</strong> no bloquea el envío</li></ul></div>
+        <div class="compare-box"><h4>❌ Desventajas UDP</h4><ul><li><strong>Sin garantía de entrega:</strong> modelo best-effort</li><li><strong>Sin ordenamiento:</strong> paquetes pueden llegar desordenados</li><li><strong>Sin control de congestión:</strong> puede saturar la red</li><li>El cliente debe implementar control si lo necesita</li></ul></div>
+      </div>
+
+      <h3 class="sub">Casos de Uso UDP</h3>
+      <div class="tags">
+        <span class="tag orange">VoIP</span>
+        <span class="tag blue">Juegos en Línea</span>
+        <span class="tag teal">Streaming de Video</span>
+        <span class="tag yellow">DNS</span>
+        <span class="tag purple">NTP (sincronización de tiempo)</span>
+      </div>
+
+      <h3 class="sub">UDP en Redes Modernas</h3>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">⚡</div><h3>QUIC (Google)</h3><p>Protocolo que combina UDP con fiabilidad y cifrado TLS 1.3, reduciendo latencia. Es la base de <strong>HTTP/3</strong>.</p></div>
+        <div class="card"><div class="card-icon">🔒</div><h3>DTLS</h3><p>Versión de TLS adaptada para UDP. Proporciona seguridad a aplicaciones que requieren baja latencia.</p></div>
+        <div class="card"><div class="card-icon">📺</div><h3>RTP (Streaming en Tiempo Real)</h3><p>Aprovecha la velocidad de UDP para transmisiones de audio/video. Esencial para telefonía IP y videoconferencias.</p></div>
+      </div>
+
+      <h3 class="sub">Seguridad en UDP — Vulnerabilidades</h3>
+      <div class="cards-grid">
+        <div class="card"><h3>Ataques de Inundación UDP</h3><p>Envío masivo de datagramas para saturar el ancho de banda y agotar recursos del servidor (DoS).</p></div>
+        <div class="card"><h3>Desbordamiento de Búfer</h3><p>Procesamiento de datagramas maliciosos puede generar errores de memoria, permitiendo ejecución remota de código.</p></div>
+        <div class="card"><h3>Ataques de Reflexión</h3><p>El atacante falsifica la IP de la víctima, enviando datagramas a servidores legítimos que responden a ella (amplificación).</p></div>
+        <div class="card"><h3>Ataques Loop DoS</h3><p>Creación de bucles de tráfico entre dispositivos mal configurados, agotando sus recursos.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="tcp-vs-udp">
+      <div class="section-header"><span class="section-number">10.B</span><h2>TCP vs UDP — Comparativa</h2><div class="section-accent" style="background: #fb923c"></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Factor</th><th>TCP</th><th>UDP</th></tr></thead>
+          <tbody>
+            <tr><td>Tipo de conexión</td><td>Requiere conexión establecida antes de transmitir</td><td>No se necesita conexión previa</td></tr>
+            <tr><td>Secuencia de datos</td><td>Puede secuenciar y ordenar datos</td><td>No puede secuenciar ni ordenar datos</td></tr>
+            <tr><td>Retransmisión</td><td>Retransmite si no llegan los paquetes</td><td>Sin retransmisión. Datos perdidos = perdidos</td></tr>
+            <tr><td>Entrega</td><td>Garantizada</td><td>No garantizada (best-effort)</td></tr>
+            <tr><td>Velocidad</td><td>Más lento, pero datos completos</td><td>Más rápido, riesgo de datos incompletos</td></tr>
+            <tr><td>Overhead de cabecera</td><td>20 bytes mínimo</td><td>8 bytes (mucho menor)</td></tr>
+            <tr><td>Uso típico</td><td>HTTP, FTP, SMTP, SSH</td><td>DNS, VoIP, streaming, juegos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="dns">
+      <div class="section-header"><span class="section-number">10.C</span><h2>DNS — Domain Name System</h2><div class="section-accent" style="background: #fb923c"></div></div>
+      <p class="body-text">El <span class="hl3">DNS (Sistema de Nombres de Dominio)</span> traduce nombres de dominio legibles por humanos en direcciones IP numéricas que las computadoras usan para comunicarse. Opera principalmente sobre <strong>UDP puerto 53</strong>.</p>
+      <div class="formula-box">
+        http://www.example.com<br>
+        <span class="comment">  ├── http://  → Prefijo (protocolo)</span><br>
+        <span class="comment">  ├── www      → Sub-dominio</span><br>
+        <span class="comment">  ├── example  → Nombre</span><br>
+        <span class="comment">  └── .com     → Extensión (TLD)</span>
+      </div>
+      <div class="callout info"><span class="callout-icon">🔍</span><div><strong>Flujo DNS:</strong> El navegador solicita <em>www.ejemplo.com</em> → consulta al Servidor DNS del ISP → el DNS responde con la IP (ej. 12.34.56.78) → el navegador conecta al servidor web usando esa IP.</div></div>
+    </section>
+
+    <section class="section" id="dhcp">
+      <div class="section-header"><span class="section-number">10.D</span><h2>DHCP — Protocolo de Configuración Dinámica de Host</h2><div class="section-accent" style="background: #fb923c"></div></div>
+      <p class="body-text">El <span class="hl3">DHCP</span> asigna automáticamente una dirección IP, máscara de subred y gateway a los dispositivos que se conectan a la red. Opera sobre UDP (cliente: puerto 68, servidor: puerto 67).</p>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">DISCOVERY</div><h4>Cliente → Servidor (Broadcast)</h4><p>El cliente envía un mensaje broadcast buscando un servidor DHCP en la red.</p></div>
+        <div class="timeline-item"><div class="timeline-year">OFFER</div><h4>Servidor → Cliente</h4><p>El servidor responde ofreciendo una dirección IP disponible junto con los parámetros de configuración.</p></div>
+        <div class="timeline-item"><div class="timeline-year">REQUEST</div><h4>Cliente → Servidor (Broadcast)</h4><p>El cliente acepta la oferta y solicita formalmente esa dirección IP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">ACKNOWLEDGE</div><h4>Servidor → Cliente</h4><p>El servidor confirma la asignación. El cliente ya puede usar la IP asignada.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="http">
+      <div class="section-header"><span class="section-number">10.E</span><h2>HTTP — Protocolo de Transferencia de Hipertexto</h2><div class="section-accent" style="background: #fb923c"></div></div>
+      <p class="body-text">La <span class="hl3">WWW (World Wide Web)</span> es un conjunto de aplicaciones que se comunican a través de <strong>HTTP (HyperText Transfer Protocol)</strong>. HTTP es un protocolo de <strong>solicitud-respuesta</strong> de Capa de Aplicación que define cómo se comunican clientes web con servidores web.</p>
+
+      <h3 class="sub">Flujo de Solicitud-Respuesta HTTP</h3>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">Paso 1</div><h4>Navegación e iniciación</h4><p>El usuario escribe una URL. El navegador hace una búsqueda DNS para resolver el nombre de dominio en una IP.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 2</div><h4>El cliente envía solicitud HTTP</h4><p>El navegador construye un mensaje de solicitud GET indicando la página raíz, la versión HTTP y los encabezados de solicitud.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 3</div><h4>El servidor envía la respuesta HTTP</h4><p>El servidor crea un mensaje de respuesta con el código de estado (ej. <strong>200 OK</strong>) y el contenido HTML.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Paso 4</div><h4>El navegador renderiza el mensaje</h4><p>El navegador procesa el HTML, CSS y JS recibidos y muestra la página web al usuario.</p></div>
+      </div>
+
+      <div class="callout warning"><span class="callout-icon">⚠️</span><div><strong>Códigos de respuesta HTTP más comunes:</strong> 200 (OK), 301 (Moved Permanently), 404 (Not Found), 502 (Bad Gateway), 503 (Service Unavailable).</div></div>
+    </section>
+
+    <section class="section" id="smtp">
+      <div class="section-header"><span class="section-number">10.F</span><h2>SMTP — Protocolo de Transferencia Simple de Correo</h2><div class="section-accent" style="background: #fb923c"></div></div>
+      <p class="body-text"><span class="hl3">SMTP</span> es el estándar técnico para la <strong>transmisión de correo electrónico</strong> a través de una red. Es un protocolo de <em>entrega</em> de correo (no de recuperación). Para recuperar el correo se usan <strong>POP3</strong> o <strong>IMAP</strong>.</p>
+
+      <h3 class="sub">Funcionamiento de SMTP</h3>
+      <div class="cards-grid">
+        <div class="card"><h3>1. Apertura de conexión SMTP</h3><p>SMTP usa TCP como protocolo de transporte. El cliente inicia la conexión TCP y envía el comando <strong>HELO</strong> o <strong>EHLO</strong>.</p></div>
+        <div class="card"><h3>2. Transferencia de datos</h3><p>El cliente envía comandos con el contenido del correo: encabezado (destino, asunto), cuerpo y adjuntos.</p></div>
+        <div class="card"><h3>3. Agente MTA</h3><p>El servidor ejecuta el <strong>MTA (Mail Transfer Agent)</strong>. Consulta DNS para encontrar la IP del servidor de destino.</p></div>
+        <div class="card"><h3>4. Cierre de conexión</h3><p>El cliente notifica al servidor cuando terminó. El servidor cierra la conexión hasta una nueva sesión.</p></div>
+      </div>
+
+      <h3 class="sub">Comandos SMTP Principales</h3>
+      <div class="formula-box">
+        HELO/EHLO     → Inicia la conexión ("Hello")<br>
+        MAIL FROM:    → Indica el remitente del correo<br>
+        RCPT TO:      → Indica el destinatario<br>
+        DATA          → Comienza la transferencia del cuerpo del correo<br>
+        QUIT          → Cierra la sesión SMTP
+      </div>
+
+      <h3 class="sub">Puertos SMTP</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Puerto</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>25</td><td>Conexiones entre servidores SMTP. Bloqueado por firewalls de usuarios (spam).</td></tr>
+            <tr><td>465</td><td>SMTP con SSL (legacy, obsoleto en sistemas modernos).</td></tr>
+            <tr><td>587</td><td>Puerto por defecto actual para envío de correo con encriptación TLS.</td></tr>
+            <tr><td>2525</td><td>No oficial, usado como alternativa si los anteriores están bloqueados.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 11 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:#a78bfa">11</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>NFV — Virtualización de Funciones de Red</h2>
+      </div>
+    </div>
+
+    <section class="section" id="nfv">
+      <div class="section-header"><span class="section-number">11.A</span><h2>¿Qué es NFV?</h2><div class="section-accent" style="background: #a78bfa"></div></div>
+      <p class="body-text"><span class="hl4">NFV (Network Function Virtualization)</span> es una tecnología que permite que funciones de red — que antes necesitaban hardware específico — ahora se ejecuten como <strong>software</strong> sobre servidores estándar (COTS – Commercial Off-The-Shelf hardware).</p>
+      <p class="body-text">Antes, cada función (firewall, router, balanceador de carga) era un dispositivo físico dedicado. Con NFV, todas esas funciones pueden estar virtualizadas: son programas corriendo en una computadora, como apps.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Concepto</th><th>Antes (sin NFV)</th><th>Ahora (con NFV)</th></tr></thead>
+          <tbody>
+            <tr><td>Hardware</td><td>Dispositivos físicos dedicados</td><td>Software en servidores estándar</td></tr>
+            <tr><td>Escalabilidad</td><td>Lenta, manual</td><td>Rápida, automática</td></tr>
+            <tr><td>Costo</td><td>Alto (CapEx elevado)</td><td>Menor (modelo OpEx)</td></tr>
+            <tr><td>Flexibilidad</td><td>Limitada</td><td>Muy alta</td></tr>
+            <tr><td>Compatibilidad con 5G</td><td>Difícil de adaptar</td><td>Altamente compatible</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="nfv-evolucion">
+      <div class="section-header"><span class="section-number">11.B</span><h2>Evolución de la Virtualización a NFV</h2><div class="section-accent" style="background: #a78bfa"></div></div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year">Era 1</div><h4>Máquinas Virtuales (VMs)</h4><p>Virtualización mediante hipervisores (VMware, Hyper-V, KVM). Mejor utilización del hardware, aislamiento de cargas de trabajo. Pero gestión compleja y escalado manual.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Era 2</div><h4>Auge de la Nube</h4><p>AWS, Azure, Google Cloud permiten pasar de infraestructura local a servicios gestionados. Cambio de modelo CapEx a OpEx. Cómputo elástico (EC2, GCE).</p></div>
+        <div class="timeline-item"><div class="timeline-year">Era 3</div><h4>Contenedores (Docker)</h4><p>Empaquetar aplicaciones con sus dependencias en unidades ligeras y portátiles. Arranque más rápido, menor consumo de recursos. Arquitecturas de microservicios.</p></div>
+        <div class="timeline-item"><div class="timeline-year">Era 4</div><h4>Orquestación en la Nube</h4><p><strong>Kubernetes</strong>: orquesta contenedores automáticamente (despliegue, escalado, gestión). <strong>OpenStack</strong>: sistema operativo de nube open source (IaaS). Solución NFV actual.</p></div>
+      </div>
+
+      <h3 class="sub">Planos de NFV</h3>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">🖥️</div><h3>Management Plane</h3><p>Gestión de la infraestructura de red. Interfaz: UX, CLI, REST-API, SNMP. El operador administra la red.</p></div>
+        <div class="card"><div class="card-icon">🔀</div><h3>Control Plane</h3><p>Señalización entre entidades de red. Distribuido (OSPF, BGP) o centralizado (OpenFlow, OVSDB).</p></div>
+        <div class="card"><div class="card-icon">📨</div><h3>Data Plane</h3><p>Movimiento real de los paquetes de las aplicaciones. IPTables, IPVS, OVS-DP, DPDK, BPF, tablas de ruteo.</p></div>
+      </div>
+
+      <h3 class="sub">Marco MANO (Management and Orchestration)</h3>
+      <div class="cards-grid">
+        <div class="card"><h3>NFVO (NFV Orchestrator)</h3><p>Orquesta el ciclo de vida completo de los servicios de red. Coordina recursos y servicios.</p></div>
+        <div class="card"><h3>VNFM (VNF Manager)</h3><p>Gestiona el ciclo de vida de las funciones virtualizadas (VNFs): despliegue, escalado, actualización.</p></div>
+        <div class="card"><h3>VIM (Virtual Infrastructure Manager)</h3><p>Gestiona la infraestructura virtual: OpenStack, VMware, Kubernetes. Asigna recursos de compute, red y storage.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="nfv-5g">
+      <div class="section-header"><span class="section-number">11.C</span><h2>NFV en Redes 5G</h2><div class="section-accent" style="background: #a78bfa"></div></div>
+      <p class="body-text">NFV es fundamental para el despliegue de <span class="hl4">5G</span>, ya que permite una infraestructura más ágil y flexible, esencial para soportar las altas velocidades y la baja latencia requeridas.</p>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">📱</div><h3>BNG (Broadband Network Gateway)</h3><p>Termina sesiones de usuarios de banda ancha, asigna IPs, gestiona políticas QoS y autenticación.</p></div>
+        <div class="card"><div class="card-icon">📡</div><h3>EPC (Evolved Packet Core)</h3><p>Núcleo de la arquitectura 4G LTE. Gestiona el tráfico de datos y señalización entre dispositivos móviles e Internet.</p></div>
+        <div class="card"><div class="card-icon">📶</div><h3>BBU (Baseband Unit)</h3><p>Procesamiento digital de la señal en estaciones base. Gestión de tráfico, codificación/decodificación, control de interfaz radioeléctrica.</p></div>
+        <div class="card"><div class="card-icon">🏗️</div><h3>3GPP</h3><p>Organismo internacional que define estándares para redes móviles: 3G (UMTS), 4G (LTE), 5G (NR – New Radio).</p></div>
+      </div>
+      <div class="callout purple"><span class="callout-icon">🔮</span><div><strong>Datacenter es el nuevo CORE del Operador:</strong> Con NFV, funciones como vRouter, vBNG, vEPC y vDU corren virtualizadas en el datacenter. El hardware propietario se reemplaza por servidores estándar con software especializado.</div></div>
+    </section>
+
+    <section class="section" id="edge-iot">
+      <div class="section-header"><span class="section-number">11.D</span><h2>Edge Computing & IoT</h2><div class="section-accent" style="background: #a78bfa"></div></div>
+      <p class="body-text">La computación en el borde <span class="hl4">(Edge Computing)</span> acerca los recursos de procesamiento y almacenamiento al lugar donde se generan los datos, reduciendo latencia y dependencia de conectividad central.</p>
+
+      <div class="compare-grid">
+        <div class="compare-box"><h4>⚡ Edge Computing</h4><ul><li>Procesamiento en los sensores o microcontroladores</li><li>Análisis local inmediato sin depender de la nube</li><li>Ideal para control de maquinaria industrial</li><li>Latencia ultrabaja (milisegundos críticos)</li></ul></div>
+        <div class="compare-box"><h4>🌫️ Fog Computing</h4><ul><li>Capa intermedia entre el edge y la nube</li><li>Gateways locales agregan datos de múltiples sensores</li><li>Reduce uso de ancho de banda</li><li>Mejora resiliencia ante interrupciones de conectividad</li></ul></div>
+      </div>
+
+      <div class="callout info"><span class="callout-icon">🌐</span><div><strong>Pirámide IoT:</strong> <em>Edge</em> (miles de millones de dispositivos) → <em>Fog</em> (millones de nodos intermedios) → <em>Cloud</em> (miles de datacenters). Cada nivel agrega procesamiento y reduce el volumen de datos hacia arriba.</div></div>
+
+      <h3 class="sub">Funciones NFV Virtualizadas en IoT</h3>
+      <div class="tags">
+        <span class="tag orange">vFirewall</span>
+        <span class="tag blue">vRouter / vSwitch</span>
+        <span class="tag teal">vIDS / vIPS</span>
+        <span class="tag purple">vLoad Balancer</span>
+        <span class="tag pink">vEPC</span>
+        <span class="tag green">Network Slicing</span>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ══════════════════════════ UNIDAD 12 ══════════════════════ -->
+    <div class="unit-divider">
+      <span class="unit-num" style="color:#34d399">12</span>
+      <div class="unit-info">
+        <div class="unit-label">Unidad</div>
+        <h2>Protocolos de Enrutamiento Dinámico — BGP y OSPF</h2>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-bottom:1.5rem"><span class="callout-icon">📌</span><div><strong>Nota:</strong> Este tema es de la última clase teórica del cuatrimestre. <strong>No entra en el recuperatorio</strong> (que cubre PPT 1–7), pero <strong>SÍ entra en el examen final</strong> (puede ser una pregunta teórica o ejercicio conceptual).</div></div>
+
+    <section class="section" id="bgp">
+      <div class="section-header"><span class="section-number">12.A</span><h2>BGP — Border Gateway Protocol</h2><div class="section-accent" style="background: #34d399"></div></div>
+      <p class="body-text"><span class="hl6">BGP</span> es el protocolo de enrutamiento <strong>inter-AS (exterior)</strong> que utiliza Internet para comunicar redes de distintos proveedores (Sistemas Autónomos). Es el protocolo central de Internet. Opera sobre <strong>TCP puerto 179</strong>.</p>
+      <p class="body-text">Un Sistema Autónomo (ASN) es el "DNI" de una red para publicarse e identificarse en Internet. Los números ASN se registran ante <strong>IANA</strong> (autoridad máxima) y los registros regionales como <strong>LACNIC</strong> en Latinoamérica los asignan. Ejemplos: Telecom Argentina (ASN 7303), Google (AS15169), Amazon (AS16509), Microsoft (AS8075), Meta (AS32934).</p>
+
+      <h3 class="sub">iBGP vs. eBGP</h3>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🔵 iBGP (Internal BGP)</h4><ul><li>Se usa para comunicar routers <strong>dentro del mismo AS</strong></li><li>Permite distribuir internamente las rutas aprendidas por eBGP</li><li>No modifica el AS-Path</li><li>Requiere full-mesh o uso de route reflectors</li></ul></div>
+        <div class="compare-box"><h4>🟢 eBGP (External BGP)</h4><ul><li>Se usa para conectarse con <strong>AS distintos</strong></li><li>Ej: Telecom conectándose a Level 3 / Cogent</li><li>Añade el ASN del router al AS-Path</li><li>Es el protocolo base de Internet</li></ul></div>
+      </div>
+
+      <h3 class="sub">Selección de Ruta — Atributos BGP</h3>
+      <div class="cards-grid">
+        <div class="card"><h3>AS-Path</h3><p>Atributo principal. Lista de todos los AS que el prefijo atravesó. <strong>Menor AS-Path = ruta preferida</strong> (menos saltos entre sistemas autónomos).</p></div>
+        <div class="card"><h3>Local Preference</h3><p>Preferencia local dentro del mismo AS. Mayor valor = ruta preferida. Solo se usa en iBGP.</p></div>
+        <div class="card"><h3>MED (Multi-Exit Discriminator)</h3><p>Sugiere al AS vecino cuál enlace de entrada usar. Menor valor = ruta preferida.</p></div>
+        <div class="card"><h3>Next Hop</h3><p>Dirección IP del próximo router al que se debe enviar el tráfico para alcanzar el prefijo.</p></div>
+      </div>
+
+      <h3 class="sub">Proceso de BGP — Configuración</h3>
+      <div class="formula-box">
+        router bgp [ASN]              <span class="comment">  ← Inicia el proceso BGP con el ASN del router</span><br>
+        neighbor [IP] remote-as [ASN] <span class="comment">  ← Define un vecino BGP (peer)</span><br>
+        network [prefijo] mask [máscara] <span class="comment">← Anuncia una red</span>
+      </div>
+
+      <h3 class="sub">Peering vs. Tránsito — Recordatorio</h3>
+      <div class="compare-grid">
+        <div class="compare-box"><h4>🤝 Peering</h4><ul><li>Acuerdo bilateral entre peers (iguales)</li><li>Generalmente gratuito o compensado</li><li>Solo intercambian rutas propias</li><li>Se establece en IXP (Internet Exchange Point)</li><li>Reduce costos y mejora latencia</li></ul></div>
+        <div class="compare-box"><h4>💰 Tránsito IP</h4><ul><li>Servicio pago al proveedor de mayor jerarquía</li><li>El proveedor "saca" a Internet y anuncia todas las rutas del mundo</li><li>Se cobra por Mbps/Gbps</li><li>Tier 1 (Level 3/Cogent) → Tier 2 → Tier 3</li><li>Incluye SLA de disponibilidad, latencia y pérdida</li></ul></div>
+      </div>
+
+      <div class="callout tip"><span class="callout-icon">🌍</span><div><strong>Cómo funciona Internet en la práctica:</strong> Una empresa argentina (Arsat) paga tránsito a Telefónica. Telefónica se conecta a los Tier 1 (Cogent/Level 3). Estos Tier 1 están conectados a los cables submarinos (NAP de las Américas en Miami). Las herramientas como <strong>bgp.he.net (Hurricane Electric)</strong> permiten ver estas relaciones en tiempo real.</div></div>
+    </section>
+
+    <section class="section" id="ospf">
+      <div class="section-header"><span class="section-number">12.B</span><h2>OSPF — Open Shortest Path First</h2><div class="section-accent" style="background: #34d399"></div></div>
+      <p class="body-text"><span class="hl6">OSPF</span> es el protocolo de enrutamiento <strong>intra-AS (interior / IGP)</strong> más utilizado dentro de redes corporativas y de proveedores. Es un protocolo de <strong>Estado de Enlace (Link State)</strong> que usa el <strong>algoritmo de Dijkstra</strong> para calcular la ruta más corta.</p>
+      <p class="body-text">Reemplazó al legacy <strong>RIP</strong> (Vector Distancia), que era lento y tenía un límite de 15 saltos. OSPF escala a redes enormes sin ese límite.</p>
+
+      <h3 class="sub">Métrica de OSPF — El Costo</h3>
+      <div class="callout info"><span class="callout-icon">⚖️</span><div><strong>Costo OSPF = 100 Mbps / Ancho de Banda del Enlace</strong>. El costo es <em>inversamente proporcional</em> al ancho de banda. Un enlace de 100 Mbps tiene costo 1. Un enlace de 10 Mbps tiene costo 10. OSPF siempre elige la ruta con <strong>menor costo acumulado</strong>.</div></div>
+
+      <h3 class="sub">Terminología Clave OSPF</h3>
+      <div class="cards-grid">
+        <div class="card"><h3>LSA (Link State Advertisement)</h3><p>Anuncio que envía un router informando el estado de sus enlaces (costo, si está activo o caído). Se inunda por toda el área.</p></div>
+        <div class="card"><h3>LSDB (Link State Database)</h3><p>Base de datos que contiene todos los LSAs recibidos. Todos los routers del área tienen la misma LSDB. Sobre ella se corre Dijkstra.</p></div>
+        <div class="card"><h3>DR (Designated Router)</h3><p>Router "jefe" en un segmento de red (ej. Ethernet). Centraliza la recepción y envío de LSAs para no sobrecargar la red.</p></div>
+        <div class="card"><h3>BDR (Backup Designated Router)</h3><p>Router de respaldo del DR. Toma el lugar del DR si este falla.</p></div>
+        <div class="card"><h3>Hello Packets</h3><p>Paquetes enviados cada <strong>10 segundos</strong> entre vecinos para confirmar que siguen activos (Dead interval = 40 segundos).</p></div>
+        <div class="card"><h3>Adyacencia Full</h3><p>Estado final entre dos routers OSPF cuando sincronizaron sus bases de datos (LSDB). El proceso pasa por 8 estados: Down → Init → 2-Way → ExStart → Exchange → Loading → <strong>Full</strong>.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="ospf-areas">
+      <div class="section-header"><span class="section-number">12.C</span><h2>Áreas OSPF</h2><div class="section-accent" style="background: #34d399"></div></div>
+      <p class="body-text">En redes muy grandes, si un enlace falla, <strong>todos los routers</strong> recalcularían el algoritmo de Dijkstra consumiendo mucha CPU y RAM. La solución es dividir la red en <span class="hl6">Áreas (Zonas)</span>. Las actualizaciones de estado de enlace se quedan dentro del área, reduciendo la carga global.</p>
+
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon" style="color:#34d399">0</div><h3>Área 0 — Backbone</h3><p>El área troncal o "Zona Cero". Es la más importante. <strong>Todo el tráfico entre áreas distintas debe pasar obligatoriamente por el Área 0.</strong></p></div>
+        <div class="card"><div class="card-icon" style="color:#34d399">N</div><h3>Áreas Regulares (1, 2, 3...)</h3><p>Conectadas al Backbone a través de los ABR. Contienen los routers y redes de un segmento de la empresa.</p></div>
+        <div class="card"><div class="card-icon">🔒</div><h3>Stub Areas</h3><p>Áreas especiales que filtran las rutas externas. Solo reciben una <strong>ruta por defecto</strong> del ABR, reduciendo la tabla de ruteo de los routers en esa zona.</p></div>
+      </div>
+
+      <h3 class="sub">Componentes de la arquitectura OSPF multi-área</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Componente</th><th>Descripción</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td>IR (Internal Router)</td><td>Router interno de un área</td><td>Solo conoce la topología de su propio área</td></tr>
+            <tr><td>ABR (Area Border Router)</td><td>Router de frontera entre áreas</td><td>Conecta un área con el Backbone (Área 0). Tiene interfaces en ambas áreas.</td></tr>
+            <tr><td>ASBR (AS Boundary Router)</td><td>Router de frontera del AS</td><td>Redistribuye rutas de otros protocolos (BGP, RIP) al dominio OSPF</td></tr>
+            <tr><td>Backbone Router</td><td>Router dentro del Área 0</td><td>Solo conoce la topología del backbone</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ascii-diagram">
+         Área 1                Área 0 (Backbone)              Área 2
+    ┌──────────────┐      ┌──────────────────────┐      ┌──────────────┐
+    │ R1 ─── R2   │      │  R5 ─── R6 ─── R7   │      │ R9 ─── R10  │
+    │      │      │      │   │          │        │      │      │      │
+    │      R3     │──ABR─│  R8          │        │─ABR──│     R11     │
+    │      │      │      │              │        │      │             │
+    │      R4     │      │           Backbone    │      │             │
+    └──────────────┘      └──────────────────────┘      └──────────────┘
+         
+    Regla: Área 1 → Área 2  SIEMPRE pasa por Área 0 (Backbone)</div>
+
+      <div class="compare-grid">
+        <div class="compare-box"><h4>BGP vs OSPF — Resumen</h4><ul><li><strong>BGP:</strong> Inter-AS (entre proveedores), basado en políticas, AS-Path</li><li><strong>OSPF:</strong> Intra-AS (dentro de una empresa/proveedor), basado en costo/métrica</li><li>BGP = protocolo de Internet · OSPF = protocolo de red interna</li><li>BGP usa TCP · OSPF usa multicast IP</li></ul></div>
+        <div class="compare-box"><h4>Estático vs Dinámico — Resumen</h4><ul><li>Estático: manual, simple, seguro, no escala</li><li>Dinámico: automático, escala, recalcula rutas ante fallos</li><li>Ambos pueden coexistir en la misma red</li><li>OSPF es la opción dinámica interna estándar de la industria</li></ul></div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</main>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <span>UBA FIUBA — Introducción a Telecomunicaciones y Redes</span>
+  <span>Ing. Volpi · Ing. Giorgi · Ing. Llasat &nbsp;·&nbsp; Unidades 1–12</span>
+</footer>
+
+<script>
+  // Progress bar
+  const pb = document.getElementById('pb');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const st = h.scrollTop;
+    const sh = h.scrollHeight - h.clientHeight;
+    pb.style.transform = `scaleX(${st / sh})`;
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
